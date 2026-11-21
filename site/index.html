@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Université Numérique du Gabon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Université Numérique du Gabon (UNG) : université publique d'enseignement à distance. Licences, masters et certifications en IA, données, cybersécurité, droit, économie, sciences et langues.">
+<meta name="theme-color" content="#161A31">
+<link rel="icon" href="img/logo-ung.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800&family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<div class="utility">
+  <div class="wrap utility-in">
+    <span class="coord">0°23′N · 9°27′E · Libreville</span>
+    <a href="https://ung.duaux.com/" target="_blank" rel="noopener">Portail UNG</a>
+    <a href="https://ung-educ.org/login/index.php" target="_blank" rel="noopener">Classe virtuelle</a>
+    <a href="https://my.duaux.com/#/login" target="_blank" rel="noopener">MyUNG</a>
+    <a href="https://www.youscribe.com/" target="_blank" rel="noopener">Bibliothèque</a>
+    <a class="hot" href="https://ung.duaux.com/preinscription2026/" target="_blank" rel="noopener"><i></i>Pré-inscriptions 2026-2027 ouvertes</a>
+  </div>
+</div>
+
+<header class="header" id="header">
+  <div class="wrap header-in">
+    <a class="logo" href="#top"><img src="img/logo-ung-blanc.png" alt="Université Numérique du Gabon" width="164" height="62"></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#poles">Formations</a>
+      <a href="#ia">IA &amp; Données</a>
+      <a href="#eno">Campus ENO</a>
+      <a href="#une">Actualités</a>
+      <a href="#institution">L'UNG</a>
+    </nav>
+    <a class="btn btn-vert" href="#admissions">S'inscrire</a>
+    <button class="burger" id="menuOpen" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mega"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mega" id="mega" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="wrap">
+    <div class="mega-top">
+      <img src="img/logo-ung-blanc.png" alt="UNG" width="150" height="57">
+      <button class="mega-close" id="menuClose" aria-label="Fermer le menu">Fermer ✕</button>
+    </div>
+    <div class="mega-grid">
+      <nav class="mega-main" aria-label="Rubriques">
+        <a href="#poles"><span>01</span>Les cinq pôles</a>
+        <a href="#ia"><span>02</span>IA &amp; Données</a>
+        <a href="#eno"><span>03</span>Campus ENO</a>
+        <a href="#une"><span>04</span>À la une</a>
+        <a href="#institution"><span>05</span>L'institution</a>
+        <a href="#admissions"><span>06</span>Admissions</a>
+      </nav>
+      <div class="mega-side">
+        <h3>Plateformes</h3>
+        <a href="https://ung.duaux.com/" target="_blank" rel="noopener">Portail UNG</a>
+        <a href="https://ung-educ.org/login/index.php" target="_blank" rel="noopener">Classe virtuelle</a>
+        <a href="https://my.duaux.com/#/login" target="_blank" rel="noopener">Application MyUNG</a>
+        <a href="https://www.ung.ga/media" target="_blank" rel="noopener">Médiathèque</a>
+        <h3>Institution</h3>
+        <a href="https://www.ung.ga/orga" target="_blank" rel="noopener">Organigramme</a>
+        <a href="https://www.ung.ga/gouv" target="_blank" rel="noopener">Gouvernance</a>
+        <a href="https://www.ung.ga/charte" target="_blank" rel="noopener">Charte graphique</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ===== HERO : le logo devient une fenêtre ===== -->
+<section class="hero" id="top" aria-labelledby="heroTitle">
+  <div class="wrap hero-in">
+    <div class="hero-text">
+      <p class="kicker">Université publique · 100 % à distance · Gabon</p>
+      <h1 id="heroTitle">La connaissance,<br>accessible <span class="outline">à&nbsp;tous.</span></h1>
+      <form class="ask" id="ask" role="search" autocomplete="off">
+        <label for="askQ" class="ask-label">Que voulez-vous devenir ?</label>
+        <div class="ask-row">
+          <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <input id="askQ" type="text" placeholder="data scientist" aria-describedby="askHint">
+          <button type="submit">Trouver ma voie</button>
+        </div>
+        <p class="ask-hint" id="askHint">Écrivez un métier, une passion ou une matière. Exemples :
+          <button type="button" data-ask="juriste">juriste</button>
+          <button type="button" data-ask="cybersécurité">cybersécurité</button>
+          <button type="button" data-ask="football">football</button>
+          <button type="button" data-ask="forêt">forêt</button>
+        </p>
+        <div class="ask-out" id="askOut" aria-live="polite" hidden></div>
+      </form>
+    </div>
+    <div class="hero-visual">
+      <div class="eq" id="eq" aria-hidden="true"></div>
+      <p class="eq-caption" id="eqCaption"></p>
+      <div class="eq-dots" id="eqDots" role="group" aria-label="Choisir la photo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Fil d'actualité défilant ===== -->
+<div class="ticker" aria-label="En bref">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- ===== Chiffres : en barres, comme le logo ===== -->
+<section class="figures" aria-labelledby="figTitle">
+  <div class="wrap">
+    <div class="fig-head">
+      <h2 id="figTitle" class="h2">L'UNG en chiffres</h2>
+      <p>Une université née numérique. Chaque barre est l'une de ses forces.</p>
+    </div>
+    <div class="bars" id="bars">
+      <div class="fbar" style="--h:100%"><b data-count="2554">2554</b><span>étudiants</span></div>
+      <div class="fbar" style="--h:62%"><b data-count="97">97</b><span>enseignants vacataires</span></div>
+      <div class="fbar" style="--h:44%"><b data-count="30">30</b><span>tuteurs</span></div>
+      <div class="fbar" style="--h:76%"><b data-count="29">29</b><span>formations</span></div>
+      <div class="fbar" style="--h:34%"><b data-count="12">12</b><span>enseignants permanents</span></div>
+      <div class="fbar" style="--h:52%"><b data-count="7">7</b><span>partenaires</span></div>
+      <div class="fbar" style="--h:26%"><b data-count="6">6</b><span>ENO</span></div>
+      <div class="fbar" style="--h:22%"><b data-count="5">5</b><span>pôles</span></div>
+    </div>
+  </div>
+  <img class="fig-campus" src="img/photos/campus-siege.jpg" alt="Le bâtiment de l'Université Numérique du Gabon" loading="lazy">
+</section>
+
+<!-- ===== Pôles : cinq barres qui s'ouvrent ===== -->
+<section class="poles-sec" id="poles" aria-labelledby="polesTitle">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Formations</p>
+      <h2 id="polesTitle" class="h2">Cinq pôles. Une seule université, partout.</h2>
+      <p class="lead">Touchez un pôle pour l'ouvrir. Toutes les formations se suivent à distance, avec des tuteurs et des Espaces Numériques Ouverts.</p>
+    </div>
+    <div class="poles" id="polesBox"></div>
+    <div class="pole-detail" id="poleDetail" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ===== IA ===== -->
+<section class="ia" id="ia" aria-labelledby="iaTitle">
+  <div class="wrap">
+    <div class="ia-grid">
+      <div class="ia-text">
+        <p class="kicker">IA &amp; Données</p>
+        <h2 id="iaTitle" class="h2">Former au Gabon<br>les talents de <span class="outline">l'IA.</span></h2>
+        <p class="lead">De la licence au master, le pôle MPI couvre toute la chaîne de l'intelligence artificielle. Survolez un diplôme pour voir les métiers auxquels il mène.</p>
+        <ol class="tracks" id="tracks"></ol>
+      </div>
+      <div class="ia-map">
+        <svg id="graph" viewBox="0 0 600 560" role="img" aria-label="Carte des diplômes IA et des métiers associés"></svg>
+      </div>
+    </div>
+    <div class="labs">
+      <p class="labs-tag">Proposition à la direction</p>
+      <div class="labs-grid">
+        <article><b>Tuteur IA 24 h/24</b><p>Un assistant entraîné sur les cours de l'UNG répond aux étudiants en dehors des séances, en français.</p></article>
+        <article><b>Lab IA dans chaque ENO</b><p>Des ateliers pratiques en machine learning sur les données ouvertes du Gabon.</p></article>
+        <article><b>Bibliothèque numérique du Gabon</b><p>Le dépôt des thèses et mémoires prévu dans les axes stratégiques, avec une recherche intelligente.</p></article>
+        <article><b>Alerte décrochage</b><p>Des tableaux de bord pour repérer tôt les apprenants à distance en difficulté.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Campus ENO ===== -->
+<section class="eno" id="eno" aria-labelledby="enoTitle">
+  <div class="eno-photo">
+    <img src="img/photos/eno-classe-hybride.jpg" alt="Une classe hybride dans un Espace Numérique Ouvert, avec visioconférence" loading="lazy">
+  </div>
+  <div class="eno-panel">
+    <p class="kicker">Campus sans murs</p>
+    <h2 id="enoTitle" class="h2">Six Espaces Numériques Ouverts</h2>
+    <p class="lead">Des salles équipées dans le Grand Libreville, ouvertes à tous les étudiants. Les provinces sont les prochaines étapes.</p>
+    <ul class="eno-list" id="enoList"></ul>
+    <dl class="eno-spec">
+      <div><dt>30</dt><dd>places et 30 ordinateurs</dd></div>
+      <div><dt>75″</dt><dd>écran et webcam HD rotative</dd></div>
+      <div><dt>VDI</dt><dd>câblage haut débit</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ===== À la une ===== -->
+<section class="une" id="une" aria-labelledby="uneTitle">
+  <div class="wrap">
+    <div class="sec-head sec-head--row">
+      <div><p class="kicker">À la une</p><h2 id="uneTitle" class="h2">Les visages de l'UNG</h2></div>
+      <a class="arrow" href="https://www.ung.ga/actualites/1" target="_blank" rel="noopener">Toutes les actualités</a>
+    </div>
+    <div class="une-grid" id="uneGrid"></div>
+  </div>
+</section>
+
+<!-- ===== Coordonnateur ===== -->
+<section class="voice" id="institution" aria-labelledby="voiceTitle">
+  <div class="wrap voice-in">
+    <figure class="voice-portrait">
+      <img src="img/photos/coordonnateur.jpg" alt="Pr Jacques François Mavoungou, Coordonnateur académique de l'UNG" loading="lazy">
+    </figure>
+    <div class="voice-text">
+      <p class="kicker" id="voiceTitle">Le mot du Coordonnateur</p>
+      <blockquote>« L'UNG est pleinement engagée dans l'avenir, en exploitant les opportunités offertes par la technologie pour transformer l'éducation et l'apprentissage. »</blockquote>
+      <p class="voice-name"><b>Pr Jacques François Mavoungou</b>Coordonnateur académique</p>
+      <div class="values">
+        <div><b>Innovation</b><span>Former autrement grâce aux technologies.</span></div>
+        <div><b>Partage</b><span>Partenariats et synergies au cœur de la stratégie.</span></div>
+        <div><b>Employabilité</b><span>Des formations alignées sur les emplois du pays.</span></div>
+      </div>
+      <a class="arrow arrow-light" href="https://www.ung.ga/apropos" target="_blank" rel="noopener">Lire le mot complet</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Directions ===== -->
+<section class="dirs-sec" aria-labelledby="dirTitle">
+  <div class="wrap">
+    <div class="sec-head"><p class="kicker">Gouvernance</p><h2 id="dirTitle" class="h2">Six directions, rattachées au Rectorat</h2></div>
+    <div class="dirs">
+      <div><abbr>DERI</abbr><p>Études, Recherche et Innovation</p></div>
+      <div><abbr>DENO</abbr><p>Espaces Numériques Ouverts</p></div>
+      <div><abbr>DISI</abbr><p>Infrastructures et Systèmes d'Information</p></div>
+      <div><abbr>DDC</abbr><p>Développement et Coopération</p></div>
+      <div><abbr>DFIP</abbr><p>Formation et Ingénierie Pédagogique</p></div>
+      <div><abbr>CAQ</abbr><p>Cellule Assurance Qualité</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Vie étudiante ===== -->
+<section class="life" aria-labelledby="lifeTitle">
+  <div class="wrap life-in">
+    <div class="life-text">
+      <p class="kicker">Vie étudiante</p>
+      <h2 id="lifeTitle" class="h2">À distance,<br>mais jamais seuls.</h2>
+      <p class="lead">Plus de 2 000 apprenants font vivre l'UNG. Ils ont fondé leur association, la MUTUELLE, et une équipe de football masculine et une féminine. L'UNG s'engage aussi, comme pour Octobre Rose.</p>
+    </div>
+    <div class="life-collage">
+      <img class="c1" src="img/photos/sport-trophee.jpg" alt="Une joueuse de l'UNG soulève le trophée" loading="lazy">
+      <img class="c2" src="img/photos/equipe-football.jpg" alt="L'équipe de football de l'UNG" loading="lazy">
+      <img class="c3" src="img/photos/etudiants-bibliotheque.jpg" alt="Des étudiants de l'UNG en bibliothèque" loading="lazy">
+      <img class="c4" src="img/photos/octobre-rose.jpg" alt="Octobre Rose 2025 : l'UNG se mobilise contre le cancer féminin" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ===== Partenaires ===== -->
+<section class="partners-sec" aria-labelledby="partTitle">
+  <div class="wrap">
+    <div class="sec-head"><p class="kicker">Partenariats</p><h2 id="partTitle" class="h2">Un réseau au Gabon et en Afrique</h2></div>
+    <div class="partners" id="partners"></div>
+  </div>
+</section>
+
+<!-- ===== Admissions ===== -->
+<section class="admit" id="admissions" aria-labelledby="admTitle">
+  <div class="wrap admit-in">
+    <div>
+      <p class="kicker">Admissions 2026-2027</p>
+      <h2 id="admTitle" class="admit-title">Rejoignez<br><span class="outline">l'UNG.</span></h2>
+      <ol class="steps">
+        <li><b>Choisir</b>sa formation parmi les 29 du catalogue.</li>
+        <li><b>Se pré-inscrire</b>en ligne, depuis n'importe où.</li>
+        <li><b>Être admis</b>après étude du dossier.</li>
+        <li><b>Étudier</b>sur la classe virtuelle et MyUNG.</li>
+      </ol>
+      <div class="admit-cta">
+        <a class="btn btn-vert btn-lg" href="https://ung.duaux.com/preinscription2026/" target="_blank" rel="noopener">Commencer ma pré-inscription</a>
+        <a class="btn btn-ghost btn-lg" href="#top" data-focus-ask>Je ne sais pas quoi choisir</a>
+      </div>
+    </div>
+    <figure class="admit-visual">
+      <img src="img/photos/etudiante-ordinateur.jpg" alt="Une étudiante suit un cours en ligne" loading="lazy">
+      <figcaption>Cours en direct, ressources et évaluations : tout est en ligne.</figcaption>
+    </figure>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="img/logo-ung-blanc.png" alt="Université Numérique du Gabon" width="200" height="76">
+        <p>Rendre la connaissance accessible à tous et être le vecteur majeur de la transformation numérique du Gabon.</p>
+      </div>
+      <div><h4>Contact</h4>
+        <p>76 Impasse Gnambault, Batterie IV<br>(derrière l'Ambassade du Togo)<br>Libreville, Gabon</p>
+        <p class="copy-row">+241 60 17 94 88 <button class="copy" data-copy="+241 60 17 94 88" type="button">Copier</button></p>
+        <p class="copy-row">contact@ung.ga <button class="copy" data-copy="contact@ung.ga" type="button">Copier</button></p>
+      </div>
+      <div><h4>Liens utiles</h4>
+        <a href="https://www.enseignement-superieur.gouv.ga/" target="_blank" rel="noopener">Ministère de l'Enseignement supérieur</a>
+        <a href="https://www.lecames.org/" target="_blank" rel="noopener">CAMES</a>
+        <a href="https://www.refuv.org/missions" target="_blank" rel="noopener">REFUV</a>
+        <a href="https://ung.duaux.com/preinscription2026/" target="_blank" rel="noopener">Pré-inscriptions 2026-2027</a>
+      </div>
+      <div><h4>Suivre l'UNG</h4>
+        <a href="https://www.facebook.com/share/p/14s2AyK9fi/?mibextid=WC7FNe" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/ung_gabon241" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/posts/universit%C3%A9-num%C3%A9rique-du-gabon" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.youtube.com/@Universit%C3%A9num%C3%A9riquedugabon" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://whatsapp.com/channel/0029VaputR3GZNCw1AMbhl1g" target="_blank" rel="noopener">Chaîne WhatsApp</a>
+      </div>
+    </div>
+    <p class="legal">© 2026 Université Numérique du Gabon · Proposition de refonte du site</p>
+  </div>
+  <div class="foot-lines" aria-hidden="true"></div>
+</footer>
+
+<button class="fab" id="fab" aria-expanded="false" aria-controls="assist">
+  <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="fab-t">Une question ?</span>
+</button>
+<div class="assist" id="assist" hidden role="dialog" aria-label="Assistant UNG">
+  <div class="assist-head">
+    <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <div><b>Assistant UNG</b><small>Réponses tirées des informations officielles</small></div>
+    <button id="assistClose" aria-label="Fermer l'assistant">✕</button>
+  </div>
+  <div class="assist-log" id="assistLog"></div>
+  <form class="assist-form" id="assistForm">
+    <label for="assistQ" class="skip">Votre question</label>
+    <input id="assistQ" placeholder="Ex. : comment s'inscrire ?" autocomplete="off">
+    <button type="submit">Envoyer</button>
+  </form>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

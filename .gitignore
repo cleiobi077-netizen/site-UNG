@@ -1,0 +1,5 @@
+# Fichiers d'origine téléchargés (charte PDF, images brutes) : non publiés
+site/img/src/
+# Sorties de construction locales
+deploy/
+*.zip
