@@ -80,7 +80,7 @@
     animateCollapse(0, 450, function () { slide = i; layout(); animateCollapse(1, 700); });
   }
   /* Rotation automatique : bouton pause, arrêt au survol / focus, désactivée si « réduire les animations » (auto-rotation-controls) */
-  var userPaused = reduced, hovering = false, pauseBtn = $("#eqPause"), visual = $(".hero-visual");
+  var userPaused = reduced, hovering = false, pauseBtn = $("#eqPause"), visual = $(".moments-visual");
   function syncPause() {
     pauseBtn.setAttribute("aria-pressed", String(userPaused));
     pauseBtn.setAttribute("aria-label", userPaused ? "Relancer le diaporama" : "Mettre le diaporama en pause");
@@ -261,6 +261,60 @@
   $("#uneGrid").innerHTML = D.news.map(function (n, i) {
     return '<a class="story' + (i === 0 ? " feature" : "") + '" href="' + n.url + '" target="_blank" rel="noopener"><div class="story-img"><img src="' + n.img + '" alt="" loading="lazy"><span class="tag">' + esc(n.tag) + "</span></div><time>" + esc(n.date) + "</time><h3>" + esc(n.title) + "</h3>" + (n.text ? "<p>" + esc(n.text) + "</p>" : "") + "</a>";
   }).join("");
+
+  /* ================= L'UNG en images : clips qui tournent ensemble + vidéos officielles ================= */
+  (function reels() {
+    var box = $("#reels"); if (!box || !D.reels) return;
+    var html = D.reels.map(function (r, i) {
+      return '<figure class="reel">' +
+        '<video muted loop playsinline preload="none" poster="' + r.poster + '" data-src="' + r.video + '" aria-label="' + esc(r.title + " : " + r.sub) + '"></video>' +
+        '<button type="button" class="reel-btn glass" aria-pressed="false" aria-label="Mettre la vidéo en pause"><span class="pi" aria-hidden="true"></span></button>' +
+        '<figcaption class="glass">' + esc(r.title) + "<small>" + esc(r.sub) + "</small></figcaption></figure>";
+    }).join("");
+    html += '<div class="fbv"><p class="fbv-head"><b>Vidéos officielles</b><span>Publiées sur la page Facebook de l\'UNG</span></p><ul class="fbv-list">' +
+      (D.fbVideos || []).map(function (v) {
+        var url = "https://www.facebook.com/" + (v.type === "reel" ? "reel/" : "watch/?v=") + v.id + "/";
+        return '<li><button type="button" class="fbv-item" data-url="' + url + '"><span class="fbv-thumb"><img src="' + v.poster + '" alt="" loading="lazy"><i class="fbv-play" aria-hidden="true"></i><em>' + v.dur + "</em></span><span class=\"fbv-t\">" + esc(v.title) + "</span></button></li>";
+      }).join("") + '</ul><a class="arrow" href="https://www.facebook.com/profile.php?id=61566344891963&amp;sk=videos" target="_blank" rel="noopener">Toutes les vidéos sur Facebook</a></div>';
+    box.innerHTML = html;
+
+    /* Les clips démarrent ensemble quand la section est visible, s'arrêtent hors écran, et restent figés si l'utilisateur réduit les animations */
+    var vids = $$("video", box), wanted = !reduced;
+    function load(v) { if (!v.src) { v.src = v.dataset.src; } }
+    function playAll() { vids.forEach(function (v) { if (v.dataset.user !== "paused") { load(v); var p = v.play(); if (p && p.catch) p.catch(function () {}); } }); }
+    function pauseAll() { vids.forEach(function (v) { v.pause(); }); }
+    if ("IntersectionObserver" in window && wanted) {
+      new IntersectionObserver(function (en) { en[0].isIntersecting ? playAll() : pauseAll(); }, { threshold: 0.25 }).observe(box);
+    }
+    $$(".reel-btn", box).forEach(function (b, i) {
+      var v = vids[i];
+      if (!wanted) { b.setAttribute("aria-pressed", "true"); b.setAttribute("aria-label", "Lire la vidéo"); }
+      b.addEventListener("click", function () {
+        load(v);
+        if (v.paused) { v.dataset.user = ""; v.play(); b.setAttribute("aria-pressed", "false"); b.setAttribute("aria-label", "Mettre la vidéo en pause"); }
+        else { v.dataset.user = "paused"; v.pause(); b.setAttribute("aria-pressed", "true"); b.setAttribute("aria-label", "Lire la vidéo"); }
+      });
+    });
+
+    /* Vidéos Facebook : rien n'est chargé depuis Facebook avant le clic (pas de pistage) */
+    var modal = document.createElement("div");
+    modal.className = "fbv-modal"; modal.hidden = true; modal.setAttribute("role", "dialog"); modal.setAttribute("aria-modal", "true"); modal.setAttribute("aria-label", "Lecteur vidéo Facebook");
+    modal.innerHTML = '<div class="fbv-frame"><button type="button" class="fbv-close" aria-label="Fermer la vidéo">✕</button><div class="fbv-slot"></div><a class="fbv-out" target="_blank" rel="noopener">Ouvrir sur Facebook ↗</a></div>';
+    document.body.appendChild(modal);
+    var last = null;
+    function close() { modal.hidden = true; $(".fbv-slot", modal).innerHTML = ""; document.body.style.overflow = ""; if (last) last.focus(); }
+    $(".fbv-close", modal).addEventListener("click", close);
+    modal.addEventListener("click", function (e) { if (e.target === modal) close(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) close(); });
+    $$(".fbv-item", box).forEach(function (b) {
+      b.addEventListener("click", function () {
+        last = b; var url = b.dataset.url;
+        $(".fbv-out", modal).href = url;
+        $(".fbv-slot", modal).innerHTML = '<iframe title="Vidéo Facebook de l\'UNG" src="https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(url) + '&show_text=false&autoplay=true&mute=false" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+        modal.hidden = false; document.body.style.overflow = "hidden"; $(".fbv-close", modal).focus();
+      });
+    });
+  })();
 
   /* ================= Partenaires ================= */
   $("#partners").innerHTML = D.partners.map(function (p) {

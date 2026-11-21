@@ -3,6 +3,11 @@
 window.UNG = {
   /* Photos du bandeau d'accueil (découpées dans les barres du logo) */
   heroSlides: [
+    { img: "img/photos/semaine-numerique-groupe.webp", pos: "50% 45%", caption: "Semaine du Numérique, 1ʳᵉ édition · 26-30 octobre 2026" },
+    { img: "img/photos/sneg-2026-salle.webp", pos: "50% 40%", caption: "SNEG 2026 : l'UNG au rendez-vous" },
+    { img: "img/photos/semaine-numerique-stand.webp", pos: "50% 45%", caption: "Le stand de l'UNG à la Semaine du Numérique" },
+    { img: "img/photos/etudiants-eno-salle.webp", pos: "50% 45%", caption: "Les étudiants de l'UNG réunis en Espace Numérique Ouvert" },
+    { img: "img/photos/cooperation-reunion.webp", pos: "50% 45%", caption: "Réunion de coopération universitaire" },
     { img: "img/photos/eno-classe-hybride.webp", pos: "62% 50%", caption: "Formation en techno-pédagogie, ENO de l'INSG · mai 2025" },
     { img: "img/photos/agregation-cames.webp", pos: "62% 40%", caption: "22ᵉ concours d'agrégation SJPEG du CAMES · Libreville" },
     { img: "img/photos/sport-trophee.webp", pos: "45% 25%", caption: "L'équipe féminine de football de l'UNG, victorieuse" },
@@ -127,14 +132,30 @@ window.UNG = {
     { id: "CFEP-TIC", host: "Centre CFEP-TIC", note: "Le centre partenaire dédié aux métiers des TIC." }
   ],
 
+  /* Clips animés réalisés à partir des photos publiées par l'UNG (Facebook) */
+  reels: [
+    { video: "img/videos/reel-semaine-numerique.mp4", poster: "img/videos/reel-semaine-numerique.webp", title: "Semaine du Numérique", sub: "1ʳᵉ édition · octobre 2026" },
+    { video: "img/videos/reel-sneg-2026.mp4", poster: "img/videos/reel-sneg-2026.webp", title: "SNEG 2026", sub: "L'UNG au rendez-vous" },
+    { video: "img/videos/reel-etudiants-eno.mp4", poster: "img/videos/reel-etudiants-eno.webp", title: "Nos étudiants", sub: "En Espace Numérique Ouvert" }
+  ],
+
+  /* Vidéos officielles publiées sur la page Facebook de l'UNG (lecture via le lecteur Facebook, au clic) */
+  fbVideos: [
+    { id: "4146238822325754", type: "reel", poster: "img/videos/poster-v6.webp", title: "Rejoins la grande famille de l'UNG", dur: "0:21" },
+    { id: "4435073673429127", type: "reel", poster: "img/videos/poster-v0.webp", title: "Salon National de l'Orientation, 3ᵉ édition", dur: "1:04" },
+    { id: "3238017883029691", type: "reel", poster: "img/videos/poster-v5.webp", title: "L'UNG et le CAMES", dur: "2:09" },
+    { id: "1316544773823723", type: "reel", poster: "img/videos/poster-v1.webp", title: "Entretien avec la direction académique", dur: "2:04" },
+    { id: "1147251810878583", type: "reel", poster: "img/videos/poster-v4.webp", title: "L'UNG et l'UNESCO", dur: "3:34" }
+  ],
+
   news: [
-    { tag: "Événement", title: "L'UNG accueille le 22ᵉ concours d'agrégation SJPEG du CAMES", date: "Octobre 2025", img: "img/photos/agregation-cames.webp", url: "https://www.ung.ga/actualite/92",
-      text: "Sciences juridiques, politiques, économiques et de gestion : Libreville accueille la session du 18 au 28 octobre 2025, avant Dakar." },
+    { tag: "Numérique", title: "Semaine du Numérique : l'UNG au rendez-vous national", date: "26-30 octobre 2026", img: "img/photos/semaine-numerique-groupe.webp", url: "https://www.facebook.com/profile.php?id=61566344891963",
+      text: "1ʳᵉ édition placée sous le signe de la souveraineté, de l'inclusion et de l'innovation : l'équipe et les étudiants de l'UNG ont tenu stand et présenté l'enseignement à distance." },
+    { tag: "Événement", title: "SNEG 2026 : l'UNG au rendez-vous", date: "2026", img: "img/photos/sneg-2026-officiels.webp", url: "https://www.facebook.com/profile.php?id=61566344891963" },
+    { tag: "Événement", title: "L'UNG accueille le 22ᵉ concours d'agrégation SJPEG du CAMES", date: "Octobre 2025", img: "img/photos/agregation-cames.webp", url: "https://www.ung.ga/actualite/92" },
     { tag: "Campus", title: "Le ministre de l'Enseignement supérieur inaugure un Espace Numérique Ouvert", date: "25 juin 2025", img: "img/photos/inauguration-eno.webp", url: "https://www.ung.ga/actualite/91" },
     { tag: "Pédagogie", title: "Formation en techno-pédagogie pour le personnel, à l'ENO de l'INSG", date: "21 mai 2025", img: "img/photos/eno-classe-hybride.webp", url: "https://www.ung.ga/actualite.php?id=89" },
     { tag: "Partenariat", title: "L'UNG et l'UVCI unissent leurs forces pour l'enseignement à distance", date: "Avril 2025", img: "img/photos/uvci-delegation.webp", url: "https://www.ung.ga/actualite.php?id=88" },
-    { tag: "International", title: "Rencontre avec l'Université Numérique de France à l'UNESCO", date: "2025", img: "img/photos/rencontre-unesco.webp", url: "https://www.ung.ga/actualites/1" },
-    { tag: "Communauté", title: "La Coordination académique célèbre la Journée internationale des droits des femmes", date: "8 mars 2025", img: "img/photos/journee-femmes.webp", url: "https://www.ung.ga/actualite.php?id=87" }
   ],
 
   partners: [
