@@ -489,6 +489,54 @@ p { margin: 0; }
 .assist-form input:focus { outline: none; border-color: var(--vert); }
 .assist-form button { border: 0; background: var(--bleu); color: #fff; border-radius: 999px; padding: 0 16px; font: 700 14px var(--f-titre); cursor: pointer; }
 
+/* ---------- Verre dépoli UNG (effet maison, couleurs de la charte) ----------
+   Fond blanc translucide légèrement teinté menthe, flou + saturation, liseré lumineux
+   et reflet en haut. Réservé aux éléments posés sur une photo ou un fond coloré. */
+:root {
+  --glass-bg: rgba(255, 255, 255, .58);
+  --glass-bg-strong: rgba(255, 255, 255, .78);
+  --glass-tint: rgba(221, 242, 234, .35);
+  --glass-line: rgba(255, 255, 255, .75);
+  --glass-shadow: 0 10px 30px -12px rgba(22, 26, 49, .28), inset 0 1px 0 rgba(255, 255, 255, .9);
+  --glass-blur: blur(16px) saturate(1.5);
+}
+.fchip, .eq-caption, .pause-btn, .ask-out, .story-img .tag, .eno-list button, .eno-note,
+.labs-grid article, .values div, .steps li, .ticker-pause, .to-top, .assist, .glass {
+  background: linear-gradient(135deg, var(--glass-bg-strong), var(--glass-bg)) , var(--glass-tint);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow);
+}
+/* Reflet diagonal qui glisse au survol */
+.labs-grid article, .values div, .steps li { position: relative; overflow: hidden; }
+.labs-grid article::after, .values div::after, .steps li::after {
+  content: ""; position: absolute; inset: -40% auto -40% -60%; width: 40%; transform: rotate(18deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.65), transparent);
+  transition: left .8s var(--ease); pointer-events: none;
+}
+.labs-grid article:hover::after, .values div:hover::after, .steps li:hover::after { left: 130%; }
+/* Légende du diaporama : pastille de verre posée sur le bas du cercle */
+.eq-caption { position: relative; z-index: 2; width: fit-content; max-width: 92%; margin: -26px auto 0; padding: 8px 16px; border-radius: 999px; color: var(--bleu); font-weight: 600; min-height: 0; }
+/* Sur le vert des ENO, le verre est plus transparent pour laisser vivre la couleur */
+.eno-list button { background: linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.18)); }
+.eno-list button[aria-expanded="true"] { background: var(--glass-bg-strong); border-color: var(--bleu); }
+.story-img .tag { background: rgba(255,255,255,.72); }
+.labs-grid, .values, .steps { isolation: isolate; }
+/* Pastilles flottantes de couleur derrière les cartes de verre pour que le flou se voie */
+.labs { position: relative; }
+.labs::before { content: ""; position: absolute; z-index: -1; left: 10%; top: 30%; width: 260px; height: 260px; border-radius: 50%; background: var(--vert-c); filter: blur(60px); opacity: .45; }
+.admit-in, .voice-in { position: relative; }
+.admit-in::before { content: ""; position: absolute; z-index: 0; left: 2%; bottom: 0; width: 280px; height: 200px; border-radius: 50%; background: #BFD3F2; filter: blur(70px); opacity: .6; pointer-events: none; }
+.admit-in > * { position: relative; z-index: 1; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .fchip, .eq-caption, .pause-btn, .ask-out, .story-img .tag, .eno-note,
+  .labs-grid article, .values div, .steps li, .ticker-pause, .to-top, .assist, .glass { background: rgba(255,255,255,.94); }
+}
+
+/* Quand Motion pilote les pôles, la transition CSS de largeur est coupée pour éviter le double mouvement */
+@media (min-width: 861px) { .has-motion .pole { transition-property: background, transform, box-shadow; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }

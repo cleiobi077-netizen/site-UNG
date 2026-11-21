@@ -3,3 +3,4 @@ site/img/src/
 # Sorties de construction locales
 deploy/
 *.zip
+.impeccable/config.local.json

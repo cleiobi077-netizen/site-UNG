@@ -135,6 +135,11 @@
     out.innerHTML = "<h3>Vos trajectoires à l'UNG</h3>" + r.map(function (x) {
       return '<a class="match" href="#poles" data-pole="' + x.p.pole + '"><span class="bar" style="background:' + D.poles[x.p.pole].color + '"></span><span><b>' + esc(x.p.title) + "</b><small>" + (x.hit ? "Mène à : " + esc(x.hit) : esc(x.p.desc)) + "</small></span><em>" + poleLabel(x.p.pole) + " · " + x.p.level + "</em></a>";
     }).join("");
+    if (window.Motion && !reduced) {
+      var ms = $$(".match", out); ms.forEach(function (m) { m.style.animation = "none"; });
+      window.Motion.animate(ms, { opacity: [0, 1], transform: ["translateX(-12px)", "translateX(0px)"] }, { type: "spring", stiffness: 220, damping: 22, delay: window.Motion.stagger(0.07) });
+      window.Motion.animate($$(".match .bar", out), { transform: ["scaleY(0)", "scaleY(1)"] }, { duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: window.Motion.stagger(0.07, { startDelay: 0.1 }) });
+    }
   }
   $("#ask").addEventListener("submit", function (e) { e.preventDefault(); showResults(askQ.value || askQ.placeholder); });
   $$("[data-ask]").forEach(function (b) { b.addEventListener("click", function () { askQ.value = b.dataset.ask; showResults(b.dataset.ask); }); });
@@ -159,6 +164,10 @@
   var fmt = function (n) { return n.toLocaleString("fr-FR").replace(/ | /g, " "); };
   function countUp(el) {
     var end = +el.dataset.count, s = performance.now();
+    if (window.Motion && window.Motion.animate) {
+      window.Motion.animate(0, end, { duration: 1.6, ease: [0.16, 1, 0.3, 1], onUpdate: function (v) { el.textContent = fmt(Math.round(v)); } });
+      return;
+    }
     (function step(n) { var p = Math.min(1, (n - s) / 1300), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(Math.round(end * e)); if (p < 1) requestAnimationFrame(step); })(s);
   }
   $$("[data-count]").forEach(function (el) { el.textContent = fmt(+el.dataset.count); });
@@ -186,7 +195,13 @@
       }).join("") + "</ul></div></div>";
   }).join("");
   function openPole(k) {
-    $$(".pole").forEach(function (el) { var on = el.dataset.k === k; el.classList.toggle("open", on); el.setAttribute("aria-expanded", String(on)); });
+    var springy = window.Motion && !reduced && window.innerWidth > 860;
+    $$(".pole").forEach(function (el) {
+      var on = el.dataset.k === k;
+      el.classList.toggle("open", on); el.setAttribute("aria-expanded", String(on));
+      /* Motion : la largeur des barres suit un ressort (léger rebond) au lieu d'une transition linéaire */
+      if (springy) window.Motion.animate(el, { flexGrow: on ? 5.2 : 1 }, { type: "spring", stiffness: 120, damping: 18 });
+    });
   }
   $$(".pole").forEach(function (el) {
     el.addEventListener("click", function (e) { if (!el.classList.contains("open") && !e.target.closest("details")) openPole(el.dataset.k); });
@@ -293,7 +308,14 @@
   var sg = document.createElement("div"); sg.className = "sugg";
   ["Comment s'inscrire ?", "Formations en IA", "Où suivre les cours ?", "Les ENO", "Contact"].forEach(function (t) { var b = document.createElement("button"); b.type = "button"; b.textContent = t; b.addEventListener("click", function () { ask(t); }); sg.appendChild(b); });
   log.appendChild(sg);
-  function setAssist(open) { box.hidden = !open; fab.setAttribute("aria-expanded", String(open)); if (open) $("#assistQ").focus(); }
+  function setAssist(open) {
+    box.hidden = !open; fab.setAttribute("aria-expanded", String(open));
+    if (open && window.Motion && !reduced) {
+      box.style.animation = "none"; box.style.transformOrigin = "bottom right";
+      window.Motion.animate(box, { opacity: [0, 1], transform: ["scale(.9) translateY(12px)", "scale(1) translateY(0px)"] }, { type: "spring", stiffness: 260, damping: 22 });
+    }
+    if (open) $("#assistQ").focus();
+  }
   fab.addEventListener("click", function () { setAssist(box.hidden); });
   $("#assistClose").addEventListener("click", function () { setAssist(false); fab.focus(); });
   $("#assistForm").addEventListener("submit", function (e) { e.preventDefault(); var v = $("#assistQ").value.trim(); if (v) { ask(v); $("#assistQ").value = ""; } });
@@ -329,7 +351,32 @@
   /* Apparition au défilement (ui-ux-pro-max « Scroll Reveal subtil ») :
      seuls les éléments sous la ligne de flottaison sont masqués, et tout s'affiche au plus tard après 4 s */
   var revealSel = ".sec-head, .fig-head, .story, .labs-grid article, .tracks li, .dirs div, .partner, .steps li, .values div, .life-text, .life-collage img, .voice-portrait, .voice-text blockquote, .eno-panel > *, .admit-visual, .ia-map";
-  if ("IntersectionObserver" in window && !reduced) {
+  var M = window.Motion, useMotion = !!(M && M.animate && M.inView) && !reduced;
+  if (useMotion) document.documentElement.classList.add("has-motion");
+
+  if (useMotion) {
+    /* Avec Motion : apparition à ressort, groupe par groupe, en cascade (stagger).
+       Seuls les éléments sous la ligne de flottaison partent masqués ; filet de sécurité à 4 s. */
+    var pending = new Map();
+    $$(revealSel).forEach(function (el) {
+      if (el.getBoundingClientRect().top <= window.innerHeight * 0.92) return;
+      el.style.opacity = "0"; el.style.transform = "translateY(18px)";
+      var k = el.parentNode; if (!pending.has(k)) pending.set(k, []); pending.get(k).push(el);
+    });
+    var show = function (els) {
+      M.animate(els, { opacity: 1, transform: "translateY(0px)" }, { type: "spring", stiffness: 170, damping: 22, delay: M.stagger(0.06) });
+    };
+    pending.forEach(function (els, parent) {
+      var stop = M.inView(parent, function () { show(els); }, { margin: "0px 0px -8% 0px" });
+      setTimeout(function () { if (els[0].style.opacity === "0" && parent.getBoundingClientRect().top < window.innerHeight) { stop(); show(els); } }, 4000);
+    });
+    /* Filet de sécurité : si une animation n'a pas pu tourner, le contenu vu à l'écran s'affiche quand même */
+    var rescue = function () {
+      pending.forEach(function (els) { els.forEach(function (el) { if (getComputedStyle(el).opacity === "0" && el.getBoundingClientRect().top < window.innerHeight) { el.style.opacity = "1"; el.style.transform = "none"; } }); });
+    };
+    setTimeout(rescue, 6000);
+    window.addEventListener("scroll", function () { clearTimeout(rescue.t); rescue.t = setTimeout(rescue, 1500); }, { passive: true });
+  } else if ("IntersectionObserver" in window && !reduced) {
     var groups = new Map();
     $$(revealSel).forEach(function (el) {
       el.classList.add("reveal");
@@ -345,6 +392,18 @@
     }, { rootMargin: "0px 0px -8% 0px" });
     $$(".reveal.pre").forEach(function (el) { rio.observe(el); });
     setTimeout(function () { $$(".reveal.pre").forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.remove("pre"); }); }, 4000);
+  }
+
+  if (useMotion) {
+    /* Entrée du bandeau : le cercle du logo « respire » une fois (il part visible, à 94 %), puis les pastilles arrivent */
+    M.animate($("#eq"), { transform: ["scale(.94)", "scale(1)"] }, { type: "spring", stiffness: 90, damping: 12 });
+    M.animate($$(".fchip"), { opacity: [0.4, 1], scale: [0.85, 1] }, { type: "spring", stiffness: 200, damping: 14, delay: M.stagger(0.12, { startDelay: 0.3 }) });
+    /* Lien actif du menu : petit rebond quand il change */
+    new MutationObserver(function (list) {
+      list.forEach(function (m) { if (m.target.classList.contains("active")) M.animate(m.target, { transform: ["scale(.92)", "scale(1)"] }, { type: "spring", stiffness: 400, damping: 15 }); });
+    }).observe($(".nav"), { subtree: true, attributes: true, attributeFilter: ["class"] });
+    /* Repassage en mobile : on rend la main au CSS pour la hauteur des pôles */
+    window.addEventListener("resize", function () { if (window.innerWidth <= 860) $$(".pole").forEach(function (p) { p.style.flexGrow = ""; }); });
   }
 
   if (fine && !reduced) {
