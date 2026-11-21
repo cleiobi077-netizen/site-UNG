@@ -283,7 +283,12 @@
     if (r.length) return "Ces formations pourraient vous intéresser : " + r.slice(0, 3).map(function (x) { return "<b>" + esc(x.p.title) + "</b>"; }).join(", ") + '. <a href="#poles" data-pole="' + r[0].p.pole + '">Voir le pôle</a>.';
     return "Je n'ai pas encore la réponse. Écrivez à contact@ung.ga ou appelez le +241 60 17 94 88.";
   }
-  function ask(q) { say(esc(q), "me"); setTimeout(function () { say(answer(q), "bot"); }, reduced ? 0 : 350); }
+  function ask(q) {
+    say(esc(q), "me");
+    if (reduced) { say(answer(q), "bot"); return; }
+    var t = document.createElement("div"); t.className = "msg bot typing"; t.setAttribute("aria-label", "L'assistant écrit"); t.innerHTML = "<i></i><i></i><i></i>"; log.appendChild(t); log.scrollTop = log.scrollHeight;
+    setTimeout(function () { t.remove(); say(answer(q), "bot"); }, 650);
+  }
   say("Bonjour ! Je réponds aux questions sur les formations, les inscriptions, les ENO et les plateformes de l'UNG.", "bot");
   var sg = document.createElement("div"); sg.className = "sugg";
   ["Comment s'inscrire ?", "Formations en IA", "Où suivre les cours ?", "Les ENO", "Contact"].forEach(function (t) { var b = document.createElement("button"); b.type = "button"; b.textContent = t; b.addEventListener("click", function () { ask(t); }); sg.appendChild(b); });
@@ -293,4 +298,79 @@
   $("#assistClose").addEventListener("click", function () { setAssist(false); fab.focus(); });
   $("#assistForm").addEventListener("submit", function (e) { e.preventDefault(); var v = $("#assistQ").value.trim(); if (v) { ask(v); $("#assistQ").value = ""; } });
   log.addEventListener("click", function (e) { var a = e.target.closest("a[data-pole]"); if (a) openPole(a.dataset.pole); if (e.target.closest("a[href^='#']") && window.innerWidth < 700) setAssist(false); });
+
+  /* ================= Vie de la page : progression, navigation active, apparitions, survols ================= */
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  /* Barre de progression de lecture + bouton « retour en haut » */
+  var prog = $("#progress"), toTop = $("#toTop"), ticking = false;
+  function onScroll() {
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    prog.style.transform = "scaleX(" + (max > 0 ? h.scrollTop / max : 0) + ")";
+    toTop.classList.toggle("show", h.scrollTop > 900);
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+  toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); $(".logo").focus({ preventScroll: true }); });
+
+  /* Lien de navigation actif selon la section visible */
+  if ("IntersectionObserver" in window) {
+    var links = $$(".nav a"), map = {};
+    links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+    var spy = new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        if (e.isIntersecting && map[e.target.id]) { links.forEach(function (l) { l.classList.remove("active"); l.removeAttribute("aria-current"); }); map[e.target.id].classList.add("active"); map[e.target.id].setAttribute("aria-current", "location"); }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(map).forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
+  }
+
+  /* Apparition au défilement (ui-ux-pro-max « Scroll Reveal subtil ») :
+     seuls les éléments sous la ligne de flottaison sont masqués, et tout s'affiche au plus tard après 4 s */
+  var revealSel = ".sec-head, .fig-head, .story, .labs-grid article, .tracks li, .dirs div, .partner, .steps li, .values div, .life-text, .life-collage img, .voice-portrait, .voice-text blockquote, .eno-panel > *, .admit-visual, .ia-map";
+  if ("IntersectionObserver" in window && !reduced) {
+    var groups = new Map();
+    $$(revealSel).forEach(function (el) {
+      el.classList.add("reveal");
+      var k = el.parentNode, i = groups.get(k) || 0; groups.set(k, i + 1);
+      if (el.getBoundingClientRect().top > window.innerHeight * 0.92) { el.classList.add("pre"); el.style.setProperty("--d", Math.min(i, 6) * 0.07 + "s"); }
+    });
+    var rio = new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target; el.classList.remove("pre"); rio.unobserve(el);
+        setTimeout(function () { el.style.setProperty("--d", "0s"); }, 1100); /* les survols suivants restent immédiats */
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    $$(".reveal.pre").forEach(function (el) { rio.observe(el); });
+    setTimeout(function () { $$(".reveal.pre").forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.remove("pre"); }); }, 4000);
+  }
+
+  if (fine && !reduced) {
+    /* Pastilles flottantes du bandeau : léger effet de profondeur suivant la souris */
+    var hero = $(".hero"), chips = $$(".fchip");
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      chips.forEach(function (c) { var d = +c.dataset.depth; c.style.translate = (-x * d).toFixed(1) + "px " + (-y * d).toFixed(1) + "px"; });
+    });
+    hero.addEventListener("pointerleave", function () { chips.forEach(function (c) { c.style.translate = "0 0"; }); });
+
+    /* Boutons principaux « aimantés » */
+    $$(".btn-vert, .ask-row button").forEach(function (b) {
+      b.addEventListener("pointermove", function (e) { var r = b.getBoundingClientRect(); b.style.translate = ((e.clientX - r.left - r.width / 2) * 0.15).toFixed(1) + "px " + ((e.clientY - r.top - r.height / 2) * 0.25).toFixed(1) + "px"; });
+      b.addEventListener("pointerleave", function () { b.style.translate = "0 0"; });
+    });
+
+    /* Cartes d'actualité inclinées en 3D au survol */
+    $$(".story").forEach(function (c) {
+      c.addEventListener("pointermove", function (e) { var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5; c.style.transform = "perspective(900px) rotateY(" + (x * 6).toFixed(2) + "deg) rotateX(" + (-y * 6).toFixed(2) + "deg) translateY(-4px)"; });
+      c.addEventListener("pointerleave", function () { c.style.transform = ""; });
+    });
+
+    /* Halo lumineux qui suit la souris sur les propositions IA */
+    $$(".labs-grid article").forEach(function (c) {
+      c.addEventListener("pointermove", function (e) { var r = c.getBoundingClientRect(); c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px"); });
+    });
+  }
 })();
