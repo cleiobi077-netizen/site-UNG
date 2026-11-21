@@ -3,26 +3,26 @@
 window.UNG = {
   /* Photos du bandeau d'accueil (découpées dans les barres du logo) */
   heroSlides: [
-    { img: "img/photos/eno-classe-hybride.jpg", pos: "62% 50%", caption: "Formation en techno-pédagogie, ENO de l'INSG · mai 2025" },
-    { img: "img/photos/agregation-cames.jpg", pos: "62% 40%", caption: "22ᵉ concours d'agrégation SJPEG du CAMES · Libreville" },
-    { img: "img/photos/sport-trophee.jpg", pos: "45% 25%", caption: "L'équipe féminine de football de l'UNG, victorieuse" },
-    { img: "img/photos/uvci-delegation.jpg", pos: "55% 38%", caption: "Délégation UNG à l'Université Virtuelle de Côte d'Ivoire" },
-    { img: "img/photos/inauguration-eno.jpg", pos: "55% 40%", caption: "Inauguration d'un Espace Numérique Ouvert · juin 2025" }
+    { img: "img/photos/eno-classe-hybride.webp", pos: "62% 50%", caption: "Formation en techno-pédagogie, ENO de l'INSG · mai 2025" },
+    { img: "img/photos/agregation-cames.webp", pos: "62% 40%", caption: "22ᵉ concours d'agrégation SJPEG du CAMES · Libreville" },
+    { img: "img/photos/sport-trophee.webp", pos: "45% 25%", caption: "L'équipe féminine de football de l'UNG, victorieuse" },
+    { img: "img/photos/uvci-delegation.webp", pos: "55% 38%", caption: "Délégation UNG à l'Université Virtuelle de Côte d'Ivoire" },
+    { img: "img/photos/inauguration-eno.webp", pos: "55% 40%", caption: "Inauguration d'un Espace Numérique Ouvert · juin 2025" }
   ],
 
   /* Couleurs des pôles = couleurs d'accompagnement de la charte graphique */
   poles: {
-    MPI:  { name: "Mathématiques, Physique, Informatique", color: "#161A31", img: "img/photos/pole-mpi.jpg",
+    MPI:  { name: "Mathématiques, Physique, Informatique", color: "#161A31", img: "img/photos/pole-mpi.webp",
             pitch: "Le pôle de l'IA, de la donnée et de la cybersécurité. Il prépare aux masters scientifiques et aux écoles d'ingénieurs." },
-    STI:  { name: "Sciences et Techniques de l'Ingénieur", color: "#1F6F63", img: "img/photos/pole-sti.jpg",
+    STI:  { name: "Sciences et Techniques de l'Ingénieur", color: "#1F6F63", img: "img/photos/pole-sti.webp",
             pitch: "Fibre optique, informatique industrielle, applications mobiles et systèmes d'information de santé." },
-    SEDG: { name: "Économie, Gestion et Droit", color: "#DA4D1E", img: "img/photos/agregation-cames.jpg",
+    SEDG: { name: "Économie, Gestion et Droit", color: "#B8401A", img: "img/photos/agregation-cames.webp",
             pitch: "Juristes du numérique, eBanking, finance et marketing digital, gestion de la paie." },
-    SHS:  { name: "Sciences Humaines et Sociales", color: "#B33D5E", img: "img/photos/sport-trophee.jpg",
+    SHS:  { name: "Sciences Humaines et Sociales", color: "#B33D5E", img: "img/photos/sport-trophee.webp",
             pitch: "Patrimoine, traduction et interprétation, langues appliquées et management du sport." },
     SVT:  { name: "Sciences de la Vie et de la Terre", color: "#462812", img: "",
             pitch: "E-agriculture, industrie du bois, économie de l'environnement et biologie marine." },
-    FC:   { name: "Formation continue certifiante", color: "#322e1a", img: "img/photos/eno-poste.jpg",
+    FC:   { name: "Formation continue certifiante", color: "#322e1a", img: "img/photos/eno-poste.webp",
             pitch: "Des certifications courtes pour les professionnels en activité." }
   },
 
@@ -128,22 +128,22 @@ window.UNG = {
   ],
 
   news: [
-    { tag: "Événement", title: "L'UNG accueille le 22ᵉ concours d'agrégation SJPEG du CAMES", date: "Octobre 2025", img: "img/photos/agregation-cames.jpg", url: "https://www.ung.ga/actualite/92",
+    { tag: "Événement", title: "L'UNG accueille le 22ᵉ concours d'agrégation SJPEG du CAMES", date: "Octobre 2025", img: "img/photos/agregation-cames.webp", url: "https://www.ung.ga/actualite/92",
       text: "Sciences juridiques, politiques, économiques et de gestion : Libreville accueille la session du 18 au 28 octobre 2025, avant Dakar." },
-    { tag: "Campus", title: "Le ministre de l'Enseignement supérieur inaugure un Espace Numérique Ouvert", date: "25 juin 2025", img: "img/photos/inauguration-eno.jpg", url: "https://www.ung.ga/actualite/91" },
-    { tag: "Pédagogie", title: "Formation en techno-pédagogie pour le personnel, à l'ENO de l'INSG", date: "21 mai 2025", img: "img/photos/eno-classe-hybride.jpg", url: "https://www.ung.ga/actualite.php?id=89" },
-    { tag: "Partenariat", title: "L'UNG et l'UVCI unissent leurs forces pour l'enseignement à distance", date: "Avril 2025", img: "img/photos/uvci-delegation.jpg", url: "https://www.ung.ga/actualite.php?id=88" },
-    { tag: "International", title: "Rencontre avec l'Université Numérique de France à l'UNESCO", date: "2025", img: "img/photos/rencontre-unesco.jpg", url: "https://www.ung.ga/actualites/1" },
-    { tag: "Communauté", title: "La Coordination académique célèbre la Journée internationale des droits des femmes", date: "8 mars 2025", img: "img/photos/journee-femmes.jpg", url: "https://www.ung.ga/actualite.php?id=87" }
+    { tag: "Campus", title: "Le ministre de l'Enseignement supérieur inaugure un Espace Numérique Ouvert", date: "25 juin 2025", img: "img/photos/inauguration-eno.webp", url: "https://www.ung.ga/actualite/91" },
+    { tag: "Pédagogie", title: "Formation en techno-pédagogie pour le personnel, à l'ENO de l'INSG", date: "21 mai 2025", img: "img/photos/eno-classe-hybride.webp", url: "https://www.ung.ga/actualite.php?id=89" },
+    { tag: "Partenariat", title: "L'UNG et l'UVCI unissent leurs forces pour l'enseignement à distance", date: "Avril 2025", img: "img/photos/uvci-delegation.webp", url: "https://www.ung.ga/actualite.php?id=88" },
+    { tag: "International", title: "Rencontre avec l'Université Numérique de France à l'UNESCO", date: "2025", img: "img/photos/rencontre-unesco.webp", url: "https://www.ung.ga/actualites/1" },
+    { tag: "Communauté", title: "La Coordination académique célèbre la Journée internationale des droits des femmes", date: "8 mars 2025", img: "img/photos/journee-femmes.webp", url: "https://www.ung.ga/actualite.php?id=87" }
   ],
 
   partners: [
-    { name: "UCAD", full: "Université Cheikh Anta Diop de Dakar", what: "Validation de maquettes, formations communes, mobilité", logo: "img/logos/part4.jpg", url: "https://www.ucad.sn/" },
-    { name: "UN-CHK", full: "Université numérique Cheikh Hamidou Kane", what: "Appui à l'installation, réseautage, certification", logo: "img/logos/part2.jpg", url: "https://www.unchk.sn/" },
-    { name: "UVCI", full: "Université Virtuelle de Côte d'Ivoire", what: "Appui à l'installation, enseignants disponibles", logo: "img/logos/part3.jpg", url: "https://uvci.online/portail/Main/index/fr" },
-    { name: "UNESCO", full: "Bureau de Libreville", what: "Ressources pédagogiques libres", logo: "img/logos/unesco.png", url: "https://www.unesco.org/fr/fieldoffice/libreville/gsagabon" },
-    { name: "CNOG", full: "Comité National Olympique du Gabon", what: "Masters et licences du management du sport", logo: "img/logos/part6.jpg", url: "https://www.facebook.com/p/Comit%C3%A9-National-Olympique-du-Gabon" },
-    { name: "Laboratoire de langues", full: "Laboratoire de Langues de Libreville", what: "Installation, réseautage, enseignants", logo: "img/logos/part5.jpg", url: "https://www.facebook.com/p/Laboratoire-de-Langues-de-Lbv" },
-    { name: "CFEP-TIC", full: "Centre de formation aux métiers des TIC", what: "Espace Numérique Ouvert partenaire", logo: "img/logos/part1.jpg" }
+    { name: "UCAD", full: "Université Cheikh Anta Diop de Dakar", what: "Validation de maquettes, formations communes, mobilité", logo: "img/logos/part4.webp", url: "https://www.ucad.sn/" },
+    { name: "UN-CHK", full: "Université numérique Cheikh Hamidou Kane", what: "Appui à l'installation, réseautage, certification", logo: "img/logos/part2.webp", url: "https://www.unchk.sn/" },
+    { name: "UVCI", full: "Université Virtuelle de Côte d'Ivoire", what: "Appui à l'installation, enseignants disponibles", logo: "img/logos/part3.webp", url: "https://uvci.online/portail/Main/index/fr" },
+    { name: "UNESCO", full: "Bureau de Libreville", what: "Ressources pédagogiques libres", logo: "img/logos/unesco.webp", url: "https://www.unesco.org/fr/fieldoffice/libreville/gsagabon" },
+    { name: "CNOG", full: "Comité National Olympique du Gabon", what: "Masters et licences du management du sport", logo: "img/logos/part6.webp", url: "https://www.facebook.com/p/Comit%C3%A9-National-Olympique-du-Gabon" },
+    { name: "Laboratoire de langues", full: "Laboratoire de Langues de Libreville", what: "Installation, réseautage, enseignants", logo: "img/logos/part5.webp", url: "https://www.facebook.com/p/Laboratoire-de-Langues-de-Lbv" },
+    { name: "CFEP-TIC", full: "Centre de formation aux métiers des TIC", what: "Espace Numérique Ouvert partenaire", logo: "img/logos/part1.webp" }
   ]
 };

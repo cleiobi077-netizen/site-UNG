@@ -20,7 +20,17 @@
   }
   openBtn.addEventListener("click", function () { setMenu(true); });
   $("#menuClose").addEventListener("click", function () { setMenu(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !mega.hidden) setMenu(false); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !mega.hidden) setMenu(false);
+    if (e.key === "Escape" && !$("#assist").hidden) { $("#assist").hidden = true; $("#fab").setAttribute("aria-expanded", "false"); $("#fab").focus(); }
+    /* Le focus clavier reste dans le menu plein écran tant qu'il est ouvert */
+    if (e.key === "Tab" && !mega.hidden) {
+      var f = $$("a[href], button", mega).filter(function (x) { return x.offsetParent !== null; });
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
   $$("#mega a[href^='#']").forEach(function (a) { a.addEventListener("click", function () { mega.hidden = true; document.body.style.overflow = ""; openBtn.setAttribute("aria-expanded", "false"); }); });
 
   /* ================= Hero : la photo vue à travers les barres du logo ================= */
@@ -69,8 +79,21 @@
     if (i === slide) return;
     animateCollapse(0, 450, function () { slide = i; layout(); animateCollapse(1, 700); });
   }
-  var auto = setInterval(function () { go((slide + 1) % D.heroSlides.length); }, 6000);
-  $("#eqDots").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; clearInterval(auto); go(+b.dataset.i); });
+  /* Rotation automatique : bouton pause, arrêt au survol / focus, désactivée si « réduire les animations » (auto-rotation-controls) */
+  var userPaused = reduced, hovering = false, pauseBtn = $("#eqPause"), visual = $(".hero-visual");
+  function syncPause() {
+    pauseBtn.setAttribute("aria-pressed", String(userPaused));
+    pauseBtn.setAttribute("aria-label", userPaused ? "Relancer le diaporama" : "Mettre le diaporama en pause");
+    $(".pt", pauseBtn).textContent = userPaused ? "Lecture" : "Pause";
+  }
+  setInterval(function () { if (!userPaused && !hovering && !document.hidden) go((slide + 1) % D.heroSlides.length); }, 6000);
+  pauseBtn.addEventListener("click", function () { userPaused = !userPaused; syncPause(); });
+  visual.addEventListener("pointerenter", function () { hovering = true; });
+  visual.addEventListener("pointerleave", function () { hovering = false; });
+  visual.addEventListener("focusin", function () { hovering = true; });
+  visual.addEventListener("focusout", function () { hovering = false; });
+  syncPause();
+  $("#eqDots").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; userPaused = true; syncPause(); go(+b.dataset.i); });
   eq.addEventListener("pointermove", function (e) { var r = wrap.getBoundingClientRect(); mouseX = (e.clientX - r.left) / r.width; });
   eq.addEventListener("pointerleave", function () { mouseX = -1; });
   window.addEventListener("resize", function () { layout(); if (reduced) draw(performance.now()); });
@@ -122,6 +145,14 @@
   var tick = D.news.map(function (n) { return '<a href="' + n.url + '" target="_blank" rel="noopener">' + esc(n.title) + "</a>"; });
   tick.unshift('<a href="https://ung.duaux.com/preinscription2026/" target="_blank" rel="noopener">Pré-inscriptions académiques 2026-2027 ouvertes</a>');
   $("#ticker").innerHTML = tick.join("") + tick.join("").replace(/<a /g, '<a tabindex="-1" aria-hidden="true" ');
+  var tp = $("#tickerPause");
+  tp.addEventListener("click", function () {
+    var p = tp.getAttribute("aria-pressed") !== "true";
+    tp.setAttribute("aria-pressed", String(p));
+    tp.setAttribute("aria-label", p ? "Relancer le défilement des actualités" : "Arrêter le défilement des actualités");
+    $(".ticker").classList.toggle("paused", p);
+  });
+  if (reduced) tp.hidden = true;
 
   /* ================= Chiffres ================= */
   var barsBox = $("#bars");
